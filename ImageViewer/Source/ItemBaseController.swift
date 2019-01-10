@@ -17,7 +17,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
     //UI
     public var itemView = T()
-    let scrollView = UIScrollView()
+    public let scrollView = UIScrollView()
     let activityIndicatorView = UIActivityIndicatorView(style: .white)
 
     //DELEGATE / DATASOURCE
@@ -149,7 +149,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
             let singleTapRecognizer = UITapGestureRecognizer()
 
-            singleTapRecognizer.addTarget(self, action: #selector(scrollViewDidSingleTap))
+            singleTapRecognizer.addTarget(self, action: #selector(scrollViewDidSingleTap(_:)))
             singleTapRecognizer.numberOfTapsRequired = 1
             scrollView.addGestureRecognizer(singleTapRecognizer)
             singleTapRecognizer.require(toFail: doubleTapRecognizer)
@@ -161,7 +161,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
           let longPressRecognizer = UILongPressGestureRecognizer()
 
-          longPressRecognizer.addTarget(self, action: #selector(scrollViewDidLongPress))
+            longPressRecognizer.addTarget(self, action: #selector(scrollViewDidLongPress(_:)))
           scrollView.addGestureRecognizer(longPressRecognizer)
 
           self.longPressRecognizer = longPressRecognizer
@@ -262,16 +262,17 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
     public func scrollViewDidZoom(_ scrollView: UIScrollView) {
 
         itemView.center = contentCenter(forBoundingSize: scrollView.bounds.size, contentSize: scrollView.contentSize)
+        self.delegate?.itemControllerDidZoom(self, scrollView: scrollView)
     }
 
-    @objc func scrollViewDidSingleTap() {
+    @objc func scrollViewDidSingleTap(_ recognizer: UITapGestureRecognizer) {
 
-        self.delegate?.itemControllerDidSingleTap(self)
+        self.delegate?.itemControllerDidSingleTap(self, in: itemView, at: recognizer.location(in: itemView))
     }
 
-    @objc func scrollViewDidLongPress() {
+    @objc func scrollViewDidLongPress(_ recognizer: UILongPressGestureRecognizer) {
 
-        self.delegate?.itemControllerDidLongPress(self, in: itemView)
+        self.delegate?.itemControllerDidLongPress(self, in: itemView, at: recognizer.location(in: itemView))
     }
 
     @objc func scrollViewDidDoubleTap(_ recognizer: UITapGestureRecognizer) {

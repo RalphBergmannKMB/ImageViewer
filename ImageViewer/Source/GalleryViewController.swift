@@ -663,13 +663,13 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         }
     }
 
-    open func itemControllerDidSingleTap(_ controller: ItemController) {
+    open func itemControllerDidSingleTap(_ controller: ItemController, in item: ItemView, at position: CGPoint) {
 
         self.decorationViewsHidden.flip()
         animateDecorationViews(visible: !self.decorationViewsHidden)
     }
 
-    open func itemControllerDidLongPress(_ controller: ItemController, in item: ItemView) {
+    open func itemControllerDidLongPress(_ controller: ItemController, in item: ItemView, at position: CGPoint) {
         switch (controller, item) {
 
         case (_ as ImageViewController, let item as UIImageView):
@@ -713,4 +713,6 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         self.overlayView.removeFromSuperview()
         self.dismiss(animated: false, completion: nil)
     }
+
+    public func itemControllerDidZoom(_ controller: ItemController, scrollView: UIScrollView) {}
 }

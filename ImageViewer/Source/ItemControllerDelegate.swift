@@ -18,10 +18,12 @@ public protocol ItemControllerDelegate: class {
 
     func itemControllerDidFinishSwipeToDismissSuccessfully()
 
-    func itemControllerDidSingleTap(_ controller: ItemController)
-    func itemControllerDidLongPress(_ controller: ItemController, in item: ItemView)
+    func itemControllerDidSingleTap(_ controller: ItemController, in item: ItemView, at position: CGPoint)
+    func itemControllerDidLongPress(_ controller: ItemController, in item: ItemView, at position: CGPoint)
 
     func itemControllerWillAppear(_ controller: ItemController)
     func itemControllerWillDisappear(_ controller: ItemController)
     func itemControllerDidAppear(_ controller: ItemController)
+
+    func itemControllerDidZoom(_ controller: ItemController, scrollView: UIScrollView)
 }

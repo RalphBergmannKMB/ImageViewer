@@ -12,6 +12,13 @@
 
 For the latest changes see the [CHANGELOG](CHANGELOG.md)
 
+# Additions
+
+Changes to the original version:
+
+- `ItemBaseController`'s  `scrollView` is now `public`
+- changed and extend the `ItemControllerDelegate`
+
 ## Install
 
 ### CocoaPods
