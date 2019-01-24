@@ -18,6 +18,7 @@ Changes to the original version:
 
 - `ItemBaseController`'s  `scrollView` is now `public`
 - changed and extend the `ItemControllerDelegate`
+- fix a rotation bug in `GalleryViewController`
 
 ## Install
 

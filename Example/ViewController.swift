@@ -135,6 +135,7 @@ class ViewController: UIViewController {
             GalleryConfigurationItem.itemFadeDuration(0.3),
             GalleryConfigurationItem.decorationViewsFadeDuration(0.15),
             GalleryConfigurationItem.rotationDuration(0.15),
+            GalleryConfigurationItem.rotationMode(.applicationBased),
 
             GalleryConfigurationItem.displacementDuration(0.55),
             GalleryConfigurationItem.reverseDisplacementDuration(0.25),

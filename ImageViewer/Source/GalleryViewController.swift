@@ -518,7 +518,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         /// of key Window will rotate all app's content with it via affine transform and from the perspective of the
         /// gallery it is just a simple relayout. Allowing access to remaining code only makes sense if the app is
         /// portrait only but we still want to support rotation inside the gallery.
-        guard UIApplication.isPortraitOnly else { return }
+        guard rotationMode == .always, UIApplication.isPortraitOnly else { return }
 
         guard UIDevice.current.orientation.isFlat == false &&
             isAnimating == false else { return }
