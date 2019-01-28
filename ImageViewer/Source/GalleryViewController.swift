@@ -43,6 +43,7 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
     fileprivate var galleryPagingMode = GalleryPagingMode.standard
     fileprivate var headerLayout = HeaderLayout.center(25)
     fileprivate var footerLayout = FooterLayout.center(25)
+    fileprivate var footerViewLayoutSafeAreaAware = true
     fileprivate var closeLayout = ButtonLayout.pinRight(8, 16)
     fileprivate var seeAllCloseLayout = ButtonLayout.pinRight(8, 16)
     fileprivate var thumbnailsLayout = ButtonLayout.pinLeft(8, 16)
@@ -81,22 +82,23 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
 
             switch item {
 
-            case .imageDividerWidth(let width):                 spineDividerWidth = Float(width)
-            case .pagingMode(let mode):                         galleryPagingMode = mode
+            case .imageDividerWidth(let width):                      spineDividerWidth = Float(width)
+            case .pagingMode(let mode):                    galleryPagingMode = mode
             case .headerViewLayout(let layout):                 headerLayout = layout
             case .footerViewLayout(let layout):                 footerLayout = layout
+            case .footerViewLayoutSafeAreaAware(let safeArea):          footerViewLayoutSafeAreaAware = safeArea
             case .closeLayout(let layout):                      closeLayout = layout
             case .deleteLayout(let layout):                     deleteLayout = layout
             case .thumbnailsLayout(let layout):                 thumbnailsLayout = layout
-            case .statusBarHidden(let hidden):                  statusBarHidden = hidden
-            case .hideDecorationViewsOnLaunch(let hidden):      decorationViewsHidden = hidden
+            case .statusBarHidden(let hidden):                          statusBarHidden = hidden
+            case .hideDecorationViewsOnLaunch(let hidden):              decorationViewsHidden = hidden
             case .decorationViewsFadeDuration(let duration):    decorationViewsFadeDuration = duration
             case .rotationDuration(let duration):               rotationDuration = duration
-            case .rotationMode(let mode):                       rotationMode = mode
-            case .overlayColor(let color):                      overlayView.overlayColor = color
-            case .overlayBlurStyle(let style):                  overlayView.blurringView.effect = UIBlurEffect(style: style)
-            case .overlayBlurOpacity(let opacity):              overlayView.blurTargetOpacity = opacity
-            case .overlayColorOpacity(let opacity):             overlayView.colorTargetOpacity = opacity
+            case .rotationMode(let mode):                rotationMode = mode
+            case .overlayColor(let color):                           overlayView.overlayColor = color
+            case .overlayBlurStyle(let style):                         overlayView.blurringView.effect = UIBlurEffect(style: style)
+            case .overlayBlurOpacity(let opacity):                   overlayView.blurTargetOpacity = opacity
+            case .overlayColorOpacity(let opacity):                  overlayView.colorTargetOpacity = opacity
             case .blurPresentDuration(let duration):            overlayView.blurPresentDuration = duration
             case .blurPresentDelay(let delay):                  overlayView.blurPresentDelay = delay
             case .colorPresentDuration(let duration):           overlayView.colorPresentDuration = duration
@@ -105,9 +107,9 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
             case .blurDismissDelay(let delay):                  overlayView.blurDismissDelay = delay
             case .colorDismissDuration(let duration):           overlayView.colorDismissDuration = duration
             case .colorDismissDelay(let delay):                 overlayView.colorDismissDelay = delay
-            case .continuePlayVideoOnEnd(let enabled):          continueNextVideoOnFinish = enabled
+            case .continuePlayVideoOnEnd(let enabled):                  continueNextVideoOnFinish = enabled
             case .seeAllCloseLayout(let layout):                seeAllCloseLayout = layout
-            case .videoControlsColor(let color):                scrubber.tintColor = color
+            case .videoControlsColor(let color):                     scrubber.tintColor = color
             case .closeButtonMode(let buttonMode):
 
                 switch buttonMode {
@@ -326,9 +328,13 @@ open class GalleryViewController: UIPageViewController, ItemControllerDelegate {
         layoutScrubber()
     }
 
-    private var defaultInsets: UIEdgeInsets {
+    open var defaultInsets: UIEdgeInsets {
         if #available(iOS 11.0, *) {
-            return view.safeAreaInsets
+            if footerViewLayoutSafeAreaAware {
+                return view.safeAreaInsets
+            } else {
+                return UIEdgeInsets(top: statusBarHidden ? 0.0 : 20.0, left: 0.0, bottom: 0.0, right: 0.0)
+            }
         } else {
             return UIEdgeInsets(top: statusBarHidden ? 0.0 : 20.0, left: 0.0, bottom: 0.0, right: 0.0)
         }

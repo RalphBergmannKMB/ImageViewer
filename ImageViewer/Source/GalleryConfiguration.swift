@@ -54,6 +54,9 @@ public enum GalleryConfigurationItem {
     /// Layout behaviour for optional footer view.
     case footerViewLayout(FooterLayout)
 
+    /// Layout should respect the safe area.
+    case footerViewLayoutSafeAreaAware(Bool)
+
     /// Sets the status bar visible/invisible while gallery is presented.
     case statusBarHidden(Bool)
 
